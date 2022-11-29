@@ -1,0 +1,13 @@
+services:
+  nginx:
+    image: nginx
+    ports:
+      - 8080:80
+  tor:
+    image: vistrcm/tor
+    user: "501:20"
+    volumes:
+      - ./tor:/tor
+    command:
+      - -f
+      - /tor/torrc

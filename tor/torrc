@@ -1,0 +1,5 @@
+HiddenServiceDir /tor/hidden/web/
+HiddenServicePort 80 nginx:80
+
+ExcludeNodes {GB},{US},{RU},{ua},{by},{CN},{fr},{au},{ca},{nz},{??}
+DataDirectory /tor/data
