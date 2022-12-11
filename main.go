@@ -48,7 +48,7 @@ func getNodeId() string {
 func listener(quit chan bool) {
 	ln, err := net.Listen("tcp", *listenAddr)
 	if err != nil {
-		l.Logf("FATAL problem listening on %q: %q\n", listenAddr, err)
+		l.Logf("FATAL problem listening on %q: %q\n", *listenAddr, err)
 	}
 	defer func(ln net.Listener) {
 		err := ln.Close()
