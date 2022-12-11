@@ -112,7 +112,7 @@ func main() {
 
 	peers := buildPeers()
 	quitPing := make(chan bool)
-	go ping(quitPing, peers)
+	go ping(quitPing, peers, 15*time.Second)
 
 	// handle signals
 	sigs := make(chan os.Signal, 1)
@@ -139,7 +139,7 @@ func buildPeers() []*Peer {
 	return peers
 }
 
-func ping(ping chan bool, peers []*Peer) {
+func ping(ping chan bool, peers []*Peer, period time.Duration) {
 	for _, peer := range peers {
 		go func(peer *Peer) {
 			defer func() {
@@ -149,7 +149,7 @@ func ping(ping chan bool, peers []*Peer) {
 				}
 			}()
 
-			ticker := time.NewTicker(5 * time.Second)
+			ticker := time.NewTicker(period)
 			defer ticker.Stop()
 			for ; true; <-ticker.C {
 				peer.ping()
