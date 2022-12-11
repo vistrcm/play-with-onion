@@ -1,2 +1,4 @@
 nginx/tor/hidden/
 nginx/tor/data/
+tor/*/hidden/
+tor/*/data/

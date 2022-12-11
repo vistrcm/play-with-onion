@@ -1,0 +1,49 @@
+x-tor-defaults: &tor_defaults
+  image: vistrcm/tor
+  user: "501:20"
+  command:
+    - -f
+    - /tor/torrc
+
+volumes:
+  sockets:
+
+services:
+  ping_s1:
+    build: .
+    command:
+      - --socks-proxy=tor_s1:9050
+      - irscsugbcd5puacxnuqzatezqa3l2wly343275gfwyc3invwl7xrb2ad.onion:80
+      - qw673jwws7jjxhv23cqphj72ckayezp5cimplfoebkb4j7zvxgx2bhqd.onion:80
+  ping_s2:
+    build: .
+    command:
+      - --socks-proxy=tor_s2:9050
+      - t2asj5vjb2gsi5lwk7eme4hq7mjfmgfzgwd6pxsls3jshulaa3qk7kad.onion:80
+      - qw673jwws7jjxhv23cqphj72ckayezp5cimplfoebkb4j7zvxgx2bhqd.onion:80
+  ping_s3:
+    build: .
+    command:
+      - --socks-proxy=tor_s3:9050
+      - t2asj5vjb2gsi5lwk7eme4hq7mjfmgfzgwd6pxsls3jshulaa3qk7kad.onion:80
+      - irscsugbcd5puacxnuqzatezqa3l2wly343275gfwyc3invwl7xrb2ad.onion:80
+
+  tor_s1:
+    <<: *tor_defaults
+    depends_on:
+      - ping_s1
+    volumes:
+      - ./tor/s1:/tor
+      - sockets:/sockets/
+  tor_s2:
+    <<: *tor_defaults
+    depends_on:
+      - ping_s2
+    volumes:
+      - ./tor/s2:/tor
+  tor_s3:
+    <<: *tor_defaults
+    depends_on:
+      - ping_s3
+    volumes:
+      - ./tor/s3:/tor

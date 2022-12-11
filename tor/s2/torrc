@@ -1,0 +1,7 @@
+SocksPort 0.0.0.0:9050
+
+HiddenServiceDir /tor/hidden/web/
+HiddenServicePort 80 ping_s2:8080
+
+ExcludeNodes {GB},{US},{RU},{ua},{by},{CN},{fr},{au},{ca},{nz},{??}
+DataDirectory /tor/data
